@@ -1,4 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Contact } from './contact.entity';
 
 @Injectable()
-export class ContactsService {}
+export class ContactsService {
+  constructor(
+    @InjectRepository(Contact)
+    private readonly contactsRepository: Repository<Contact>,
+  ) {}
+
+  async findAll(): Promise<Contact[]> {
+    return this.contactsRepository.find();
+  }
+}
