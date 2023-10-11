@@ -26,6 +26,8 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.0",
+    "autocannon": "^7.12.0",
+    "autocannon-compare": "^0.4.0",
     "faker": "5.5.3",
     "mysql2": "^3.6.1",
     "reflect-metadata": "^0.1.13",
