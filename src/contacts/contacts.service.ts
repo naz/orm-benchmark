@@ -11,6 +11,12 @@ export class ContactsService {
   ) {}
 
   async findAll(): Promise<Contact[]> {
-    return this.contactsRepository.find();
+    return this.contactsRepository.find({
+      relations: {
+        addresses: true,
+        emails: true,
+        phones: true,
+      },
+    });
   }
 }
