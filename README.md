@@ -1,4 +1,5 @@
 # TypeORM benchmarker using NestJS
+_Credits: The idea for this repo was taken heavily from https://github.com/ErisDS/orm-benchmark_
 
 ## Description
 Bendchmarking TypeORM using NestJS framework.
