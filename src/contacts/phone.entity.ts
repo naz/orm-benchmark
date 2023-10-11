@@ -18,7 +18,7 @@ export class Phone {
   contact_id: number;
 
   @Column()
-  number: number;
+  number: string;
 
   @CreateDateColumn()
   created_at: string;
