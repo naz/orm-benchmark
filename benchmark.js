@@ -60,11 +60,11 @@ async function doComparisonBenchmark(type) {
     'http://localhost:3000/contacts',
     type,
   );
-  // let objectionResult = await getInstanceFor(
-  //   'Objection',
-  //   'http://localhost:3000/api/v1/objection/contacts',
-  //   type,
-  // );
+  let prismaResult = await getInstanceFor(
+    'Prisma',
+    'http://localhost:3000/contacts.prisma',
+    type,
+  );
   // let lucidResult = await getInstanceFor(
   //   'Lucid',
   //   'http://localhost:3000/api/v1/lucid/contacts',
@@ -72,22 +72,16 @@ async function doComparisonBenchmark(type) {
   // );
 
   const typeORMOutput = autocannon.printResult(typeORMResult, {}).split('\n');
-  // const objectionOutput = autocannon
-  //   .printResult(objectionResult, {})
-  //   .split('\n');
+  const prismaOutput = autocannon.printResult(prismaResult, {}).split('\n');
   // const lucidOutput = autocannon.printResult(lucidResult, {}).split('\n');
 
   console.log(`\n${type} benchmark results:`);
   console.log('TypeORM:\t', typeORMOutput[15]);
-  // console.log('Objection:\t', objectionOutput[15]);
+  console.log('Prisma:\t', prismaOutput[15]);
   // console.log('Lucid:\t\t', lucidOutput[15]);
 
-  // console.log('\n');
-  // printComparison(
-  //   'Objection',
-  //   'Bookshelf',
-  //   compare(objectionResult, bookshelfResult),
-  // );
+  console.log('\n');
+  printComparison('TypeORM', 'Prisma', compare(typeORMResult, prismaResult));
   // printComparison('Objection', 'Lucid', compare(objectionResult, lucidResult));
   // printComparison('Bookshelf', 'Lucid', compare(typeORMResult, lucidResult));
 }
