@@ -1,0 +1,65 @@
+-- CreateTable
+CREATE TABLE `address` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `contact_id` INTEGER NULL,
+    `description` VARCHAR(255) NOT NULL,
+    `created_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+
+    INDEX `FK_c7080920da604275c6376958711`(`contact_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `contact` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `created_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `email` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `contact_id` INTEGER NULL,
+    `account` VARCHAR(255) NOT NULL,
+    `created_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+
+    INDEX `FK_888e7c26c6df82af4ed895ab5e9`(`contact_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `phone` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `created_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `contact_id` INTEGER NOT NULL,
+    `number` VARCHAR(255) NOT NULL,
+
+    INDEX `FK_25984bc07a0060419d07e87a858`(`contact_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `user` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firstName` VARCHAR(255) NOT NULL,
+    `lastName` VARCHAR(255) NOT NULL,
+    `isActive` TINYINT NOT NULL DEFAULT 1,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `address` ADD CONSTRAINT `FK_c7080920da604275c6376958711` FOREIGN KEY (`contact_id`) REFERENCES `contact`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `email` ADD CONSTRAINT `FK_888e7c26c6df82af4ed895ab5e9` FOREIGN KEY (`contact_id`) REFERENCES `contact`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `phone` ADD CONSTRAINT `FK_25984bc07a0060419d07e87a858` FOREIGN KEY (`contact_id`) REFERENCES `contact`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+

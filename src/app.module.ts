@@ -10,6 +10,8 @@ import { Phone } from './contacts/phone.entity';
 import { Address } from './contacts/address.entity';
 import { Email } from './contacts/email.entity';
 import { ContactsModule } from './contacts/contacts.module';
+import { PrismaService } from './contacts.prisma/prisma.service';
+import { ContactsPrismaModule } from './contacts.prisma/contacts.prisma.module';
 
 @Module({
   imports: [
@@ -25,8 +27,9 @@ import { ContactsModule } from './contacts/contacts.module';
     }),
     UsersModule,
     ContactsModule,
+    ContactsPrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}

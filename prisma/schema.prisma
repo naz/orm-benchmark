@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id          Int      @id @default(autoincrement())
+  contact_id  Int?
+  description String   @db.VarChar(255)
+  created_at  DateTime @default(now()) @db.DateTime(6)
+  updated_at  DateTime @default(now()) @db.DateTime(6)
+  contact     Contact? @relation(fields: [contact_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c7080920da604275c6376958711")
+
+  @@index([contact_id], map: "FK_c7080920da604275c6376958711")
+  @@map("address")
+}
+
+model Contact {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime  @default(now()) @db.DateTime(6)
+  addresses   Address[]
+  emails      Email[]
+  phones      Phone[]
+
+  @@map("contact")
+}
+
+model Email {
+  id         Int      @id @default(autoincrement())
+  contact_id Int?
+  account    String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.DateTime(6)
+  updated_at DateTime @default(now()) @db.DateTime(6)
+  contacts    Contact? @relation(fields: [contact_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_888e7c26c6df82af4ed895ab5e9")
+
+  @@index([contact_id], map: "FK_888e7c26c6df82af4ed895ab5e9")
+  @@map("email")
+}
+
+model Phone {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.DateTime(6)
+  updated_at DateTime @default(now()) @db.DateTime(6)
+  contact_id Int
+  number     String   @db.VarChar(255)
+  contact    Contact  @relation(fields: [contact_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_25984bc07a0060419d07e87a858")
+
+  @@index([contact_id], map: "FK_25984bc07a0060419d07e87a858")
+  @@map("phone")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  firstName String @db.VarChar(255)
+  lastName  String @db.VarChar(255)
+  isActive  Int    @default(1) @db.TinyInt
+
+  @@map("user")
+}
