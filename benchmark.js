@@ -54,7 +54,7 @@ async function getInstanceFor(name, url, type) {
 }
 
 async function doComparisonBenchmark(type) {
-  console.log(`Running ${type} benchmark...`);
+  console.log(`🚀 Running ${type} benchmark...`);
   let typeORMResult = await getInstanceFor(
     'TypeORM',
     'http://localhost:3000/contacts',
@@ -75,7 +75,7 @@ async function doComparisonBenchmark(type) {
   const prismaOutput = autocannon.printResult(prismaResult, {}).split('\n');
   // const lucidOutput = autocannon.printResult(lucidResult, {}).split('\n');
 
-  console.log(`\n${type} benchmark results:`);
+  console.log(`\n${type} 🥁🥁🥁 benchmark results:`);
   console.log('TypeORM:\t', typeORMOutput[15]);
   console.log('Prisma:\t', prismaOutput[15]);
   // console.log('Lucid:\t\t', lucidOutput[15]);
