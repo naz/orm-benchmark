@@ -27,14 +27,14 @@ async function getInstanceFor(name, url, type) {
   const durationTest = {
     title: `${name} ORM Duration Benchmark`,
     url,
-    duration: 20,
+    duration: 60,
     connections: 5,
   };
 
   const throughputTest = {
     title: `${name} ORM Throughput Benchmark`,
     url,
-    amount: 100,
+    amount: 1000,
     connections: 5,
   };
 
@@ -70,20 +70,40 @@ async function doComparisonBenchmark(type) {
     'http://localhost:3000/contacts.knex',
     type,
   );
+  let bookshelfResult = await getInstanceFor(
+    'Bookshelf',
+    'http://localhost:3000/contacts.bookshelf',
+    type,
+  );
 
   const typeORMOutput = autocannon.printResult(typeORMResult, {}).split('\n');
   const prismaOutput = autocannon.printResult(prismaResult, {}).split('\n');
   const knexOutput = autocannon.printResult(knexResult, {}).split('\n');
+  const bookshelfOutput = autocannon
+    .printResult(bookshelfResult, {})
+    .split('\n');
 
   console.log(`\n${type} 🥁🥁🥁 benchmark results:`);
   console.log('TypeORM:\t', typeORMOutput[15]);
   console.log('Prisma:\t', prismaOutput[15]);
   console.log('Knex:\t\t', knexOutput[15]);
+  console.log('Bookshelf:\t', bookshelfOutput[15]);
 
   console.log('\n');
   printComparison('TypeORM', 'Prisma', compare(typeORMResult, prismaResult));
   printComparison('Prisma', 'Knex', compare(prismaResult, knexResult));
   printComparison('TypeORM', 'Knex', compare(typeORMResult, knexResult));
+  printComparison(
+    'Prisma',
+    'Bookshelf',
+    compare(prismaResult, bookshelfResult),
+  );
+  printComparison(
+    'TypeORM',
+    'Bookshelf',
+    compare(typeORMResult, bookshelfResult),
+  );
+  printComparison('Knex', 'Bookshelf', compare(knexResult, bookshelfResult));
 }
 
 /**
