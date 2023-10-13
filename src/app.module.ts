@@ -12,6 +12,8 @@ import { Email } from './contacts/email.entity';
 import { ContactsModule } from './contacts/contacts.module';
 import { PrismaService } from './contacts.prisma/prisma.service';
 import { ContactsPrismaModule } from './contacts.prisma/contacts.prisma.module';
+import { ContactsKnexModule } from './contacts.knex/contacts.knex.module';
+import { DatabaseModule } from './database.module';
 
 @Module({
   imports: [
@@ -25,9 +27,11 @@ import { ContactsPrismaModule } from './contacts.prisma/contacts.prisma.module';
       entities: [User, Contact, Phone, Address, Email],
       synchronize: true,
     }),
+    DatabaseModule,
     UsersModule,
     ContactsModule,
     ContactsPrismaModule,
+    ContactsKnexModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

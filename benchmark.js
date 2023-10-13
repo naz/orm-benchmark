@@ -65,25 +65,25 @@ async function doComparisonBenchmark(type) {
     'http://localhost:3000/contacts.prisma',
     type,
   );
-  // let lucidResult = await getInstanceFor(
-  //   'Lucid',
-  //   'http://localhost:3000/api/v1/lucid/contacts',
-  //   type,
-  // );
+  let knexResult = await getInstanceFor(
+    'Knex',
+    'http://localhost:3000/contacts.knex',
+    type,
+  );
 
   const typeORMOutput = autocannon.printResult(typeORMResult, {}).split('\n');
   const prismaOutput = autocannon.printResult(prismaResult, {}).split('\n');
-  // const lucidOutput = autocannon.printResult(lucidResult, {}).split('\n');
+  const knexOutput = autocannon.printResult(knexResult, {}).split('\n');
 
   console.log(`\n${type} 🥁🥁🥁 benchmark results:`);
   console.log('TypeORM:\t', typeORMOutput[15]);
   console.log('Prisma:\t', prismaOutput[15]);
-  // console.log('Lucid:\t\t', lucidOutput[15]);
+  console.log('Knex:\t\t', knexOutput[15]);
 
   console.log('\n');
   printComparison('TypeORM', 'Prisma', compare(typeORMResult, prismaResult));
-  // printComparison('Objection', 'Lucid', compare(objectionResult, lucidResult));
-  // printComparison('Bookshelf', 'Lucid', compare(typeORMResult, lucidResult));
+  printComparison('Prisma', 'Knex', compare(prismaResult, knexResult));
+  printComparison('TypeORM', 'Knex', compare(typeORMResult, knexResult));
 }
 
 /**
