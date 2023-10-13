@@ -12,6 +12,7 @@ import { Email } from './contacts/email.entity';
 import { ContactsModule } from './contacts/contacts.module';
 import { PrismaService } from './contacts.prisma/prisma.service';
 import { ContactsPrismaModule } from './contacts.prisma/contacts.prisma.module';
+import { ContactsBookshelfModule } from './contacts.bookshelf/contacts.bookshelf.module';
 import { ContactsKnexModule } from './contacts.knex/contacts.knex.module';
 import { DatabaseModule } from './database.module';
 
@@ -31,6 +32,7 @@ import { DatabaseModule } from './database.module';
     UsersModule,
     ContactsModule,
     ContactsPrismaModule,
+    ContactsBookshelfModule,
     ContactsKnexModule,
   ],
   controllers: [AppController],
